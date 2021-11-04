@@ -1,0 +1,39 @@
+---
+- hosts: wp_nodes
+  become: yes
+  tasks: 
+    - name: "lets create hello world"
+      file:
+        path: ~/hello_world.txt
+        state: touch
+    - name: "apache is installed"
+      yum:
+        name: httpd
+        state: present
+    - name: "copy MariaDB repo"
+      copy:
+        src: files/MariaDB.repo
+        dest: /etc/yum.repos.d/MariaDB.repo
+    - name: "install MariaDB"
+      yum:
+        name:
+          - MariaDB-server
+          - MariaDB-client
+        state: present
+    - name: "install EPEL"
+      yum:
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        state: present
+    - name: "install php repo"
+      yum:
+        name: https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+        state: present
+    - name: "install php packages"
+      yum:
+        name:
+          - php80-php
+          - php80
+          - php80-php-mysqlnd
+          - php80-php-pecl-mysql
+        state: present
+
