@@ -10,13 +10,13 @@
       - MariaDB-client
     state: present
 - name: "reload mariadb"
-    systemd:
-      name: mariadb
-      state: started
+  systemd:
+    name: mariadb
+    state: started
 - name: "install mysql realted module"
   yum:
-      name: MySQL-python
-      state: present
+    name: MySQL-python
+    state: present
 - name: "create wp's db"
   mysql_db:
     name: "{{DB_NAME}}"
